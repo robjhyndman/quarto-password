@@ -42,18 +42,18 @@ jobs:
       - name: Render Quarto Project
         uses: quarto-dev/quarto-actions/render@v2
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          # hard-coding `_site` feels a little gross, but it works
-          path: _site
-
       - name: Encrypt
         uses: actions/setup-node@v3
         with:
           node-version: 16
       - run: npm install -g staticrypt
-      - run: staticrypt ./* -r -d . -p cynthia --short
+      - run: staticrypt _site/* -r -d _site -p cynthia --short
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # hard-coding `_site` feels a little gross, but it works
+          path: _site
 
   deploy:
     if: github.event_name != 'pull_request'
