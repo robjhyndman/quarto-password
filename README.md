@@ -11,5 +11,5 @@ To use, it fork or clone this site to a private GitHub repo, then do the followi
          - run: staticrypt _site/* -r -d _site -p password --short
    ```
 
-   * Change "password" to whatever you prefer to use.
-   * Currently, the entire website is password protected. You could also just add a password to one folder in the website. To do that, replace "_site" with "_site/folder" (in both places).
+   * Change `password` to whatever you prefer to use.
+   * Currently, the entire website is password protected. You could also just add a password to one folder in the website. To do that, replace `_site` with `_site/folder` (in both places).
