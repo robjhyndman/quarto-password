@@ -46,26 +46,26 @@ jobs:
           # hard-coding `_site` feels a little gross, but it works
           path: _site
 
-    crypt:
-      runs-on: ubuntu-latest
+  crypt:
+    runs-on: ubuntu-latest
 
-      steps:
-      - uses: actions/checkout@v2
-      - name: Install staticrypt
-        run: sudo npm install -g staticrypt
-      - name: Encrypt folder
-        run: staticrypt _site/* -r -d _site -p cynthia
-      - name: Commit files
-        run: |
-          git config --local user.name "Github Action"
-          git add .
-          git commit -m "encrypted files"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-          force: true
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install staticrypt
+      run: sudo npm install -g staticrypt
+    - name: Encrypt folder
+      run: staticrypt _site/* -r -d _site -p cynthia
+    - name: Commit files
+      run: |
+        git config --local user.name "Github Action"
+        git add .
+        git commit -m "encrypted files"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
+        force: true
 
   deploy:
     if: github.event_name != 'pull_request'
