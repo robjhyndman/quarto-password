@@ -45,7 +45,7 @@ jobs:
       - name: Encrypt
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
       - run: npm install -g staticrypt
       - run: staticrypt _site/* -r -d _site -p password --short
 
