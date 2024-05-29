@@ -1,0 +1,11 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Nothing to see here"
+
+date-format: "D MMMM YYYY"
+
+format:
+  html: default
