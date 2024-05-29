@@ -14,3 +14,11 @@ To use, it fork or clone this site to a private GitHub repo, then do the followi
 
    * Change `password` to whatever you prefer to use.
    * Currently, the entire website is password protected. You could also just add a password to one folder in the website. To do that, replace `_site` with `_site/folder` (in both places).
+
+
+## Action
+
+- installs R packages using renv --> possibility replace this with `_freeze`
+- `quarto render`
+- adds password via `staticrypt`
+- deploys to github pages
