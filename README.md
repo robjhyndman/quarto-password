@@ -5,7 +5,7 @@ The website is built and deployed on GitHub Actions.
 To use, it fork or clone this site to a private GitHub repo, then do the following:
 
 1. Go to `Settings/Pages` and find "Build and deployment" and set "Source" to "GitHub Pages".
-2. The password is set in the following line from the [GitHub Action](.GitHub/workflows/quarto-gh-pages-html.yml):
+2. The password is set in the following line from the [GitHub Action](.github/workflows/quarto-gh-pages-html.yml):
 
    ```
          - run: staticrypt _site/* -r -d _site -p password --short
