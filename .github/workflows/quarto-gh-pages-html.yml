@@ -53,7 +53,7 @@ jobs:
         with:
           node-version: 16
       - run: npm install -g staticrypt
-      - run: staticrypt _site/* -r -d _site -p cynthia --short
+      - run: staticrypt ./* -r -d . -p cynthia --short
 
   deploy:
     if: github.event_name != 'pull_request'
