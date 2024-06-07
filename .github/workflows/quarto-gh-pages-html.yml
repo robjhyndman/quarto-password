@@ -47,7 +47,7 @@ jobs:
             echo "::warning title=Invalid file permissions automatically fixed::$line"
           done
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v1
         with:
           path: ${{env.PROTECTED_DIR}}
 
@@ -63,11 +63,6 @@ jobs:
 
       - name: Setup pages
         uses: actions/configure-pages@v3
-      
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: github-pages
   
       - name: Deploy to GitHub pages
         id: deployment
