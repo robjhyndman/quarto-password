@@ -27,33 +27,24 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      protected-dir: _site
     steps:
       - uses: actions/checkout@v3
-
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          use-public-rspm: true
-
-      - uses: r-lib/actions/setup-renv@v2
-
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-
       - name: Render Quarto Project
         uses: quarto-dev/quarto-actions/render@v2
-
-      - name: Encrypt
+      - name: Encrypt using Staticrypt
         uses: actions/setup-node@v3
         with:
           node-version: 20
       - run: npm install -g staticrypt
-      - run: staticrypt _site/* -r -d _site -p password --short
-
+      - run: staticrypt $protected-dir/* -r -d $protected-dir -p password --short
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          # hard-coding `_site` feels a little gross, but it works
-          path: _site
+          path: $protected-dir
 
   deploy:
     if: github.event_name != 'pull_request'
