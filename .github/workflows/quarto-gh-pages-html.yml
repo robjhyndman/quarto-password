@@ -41,10 +41,15 @@ jobs:
           node-version: 20
       - run: npm install -g staticrypt
       - run: staticrypt $PROTECTED_DIR/* -r -d $PROTECTED_DIR -p password --short
+      - name: Fix permissions
+        run: |
+          chmod -v -R +rX "$PROTECTED_DIR" | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: $PROTECTED_DIR
+          path: "$PROTECTED_DIR"
 
   deploy:
     if: github.event_name != 'pull_request'
