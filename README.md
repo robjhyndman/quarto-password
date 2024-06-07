@@ -37,5 +37,13 @@ If you prefer to run your computations locally, you can use the [Freeze executio
 
 See this gist for modified action: <https://gist.github.com/cynthiahqy/c53e6947b6da7364f9090f3d77b006d>.
 
+To add the modified action to an existing repo (without any GitHub actions) using GitHub CLI:
+
+```
+gh gist clone https://gist.github.com/cynthiahqy/c53e6947b6da7364f9090f3d77b006df
+mkdir .github
+mv c53e6947b6da7364f9090f3d77b006df .github/workflows
+```
+
 
 
