@@ -29,8 +29,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PROTECTED_DIR: _site
-      # PASSWORD: password
-      PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
+      PASSWORD: password
+      # PASSWORD: ${{ secrets.YOUR_SECRET }}
     steps:
       - name: Check PASSWORD variable
         run: |
@@ -39,10 +39,18 @@ jobs:
             exit 1
           fi
       - uses: actions/checkout@v4
+
+      # uncomment to run R code on build
+      # - uses: r-lib/actions/setup-r@v2
+      #   with:
+      #   use-public-rspm: true
+      # - uses: r-lib/actions/setup-renv@v2
+
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
       - name: Render Quarto Project
         uses: quarto-dev/quarto-actions/render@v2
+      
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -51,6 +59,7 @@ jobs:
         run: npm install -g staticrypt
       - name: Encrypt Pages
         run: staticrypt $PROTECTED_DIR/* -r -d "$PROTECTED_DIR" -p "$PASSWORD" --short
+
       - name: Fix permissions
         run: |
           chmod -v -R +rX "$PROTECTED_DIR" | while read line; do
