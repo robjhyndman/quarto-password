@@ -27,33 +27,48 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PROTECTED_DIR: _site
+      PASSWORD: password
+      # PASSWORD: ${{ secrets.YOUR_SECRET }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Check PASSWORD variable
+        run: |
+          if [[ -z "${{ env.PASSWORD }}" ]]; then
+            echo "PASSWORD variable is not set"
+            exit 1
+          fi
+      - uses: actions/checkout@v4
 
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          use-public-rspm: true
-
-      - uses: r-lib/actions/setup-renv@v2
+      # uncomment to run R code on build
+      # - uses: r-lib/actions/setup-r@v2
+      #   with:
+      #   use-public-rspm: true
+      # - uses: r-lib/actions/setup-renv@v2
 
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-
       - name: Render Quarto Project
         uses: quarto-dev/quarto-actions/render@v2
-
-      - name: Encrypt
-        uses: actions/setup-node@v3
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install -g staticrypt
-      - run: staticrypt _site/* -r -d _site -p password --short
+      - name: Install Staticrypt
+        run: npm install -g staticrypt
+      - name: Encrypt Pages
+        run: staticrypt $PROTECTED_DIR/* -r -d "$PROTECTED_DIR" -p "$PASSWORD" --short
 
+      - name: Fix permissions
+        run: |
+          chmod -v -R +rX "$PROTECTED_DIR" | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
-          # hard-coding `_site` feels a little gross, but it works
-          path: _site
+          path: ${{env.PROTECTED_DIR}}
 
   deploy:
     if: github.event_name != 'pull_request'
@@ -67,7 +82,7 @@ jobs:
 
       - name: Setup pages
         uses: actions/configure-pages@v3
-
+  
       - name: Deploy to GitHub pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4

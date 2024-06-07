@@ -1,5 +1,5 @@
 ---
-title: test
+title: Home
 ---
 
 This is a test repo
