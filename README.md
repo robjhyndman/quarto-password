@@ -41,6 +41,7 @@ To add the modified action to an existing repo (without any GitHub actions) usin
 
 ```
 gh gist clone https://gist.github.com/cynthiahqy/c53e6947b6da7364f9090f3d77b006df
+rm -rf c53e6947b6da7364f9090f3d77b006df/.git
 mkdir .github
 mv c53e6947b6da7364f9090f3d77b006df .github/workflows
 ```
