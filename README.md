@@ -2,13 +2,15 @@
 
 This is a skeleton template for a [Quarto website](https://quarto.org/docs/websites/) that is password protected and deployed on GitHub Pages.
 
-The website is built and deployed on GitHub Actions. It assumes any computations are run locally and tracked via the [Freeze execution option](https://quarto.org/docs/projects/code-execution.html#freeze) (i.e. `freeze: true` in `_quarto.yml`).
+The website is built and deployed on GitHub Actions.
 
 The GitHub Action, [`quarto-staticrypt-ghpages.yml`](.github/workflows/quarto-staticrypt-ghpages.yml) does the following:
 
 - Renders the Quarto project via `quarto render`.
 - Adds password via `staticrypt`
 - deploys to Github Pages (given correct configuration as per below)
+
+It assumes any computations are run locally and tracked via the [Freeze execution option](https://quarto.org/docs/projects/code-execution.html#freeze) (i.e. `freeze: true` in `_quarto.yml`).
 
 Use the "Use this template" button to create a new private GitHub repo with all the files in this repo.
 
@@ -34,6 +36,13 @@ Modify website build and encryption settings in [`quarto-staticrypt-ghpages.yml`
 
 1. Go to `Settings/Pages` and find "Build and deployment" and set "Source" to "GitHub Actions".
 2. A little further down the page, check "Enforce HTTPS"
+
+## Updating your Quarto Website
+
+1. Make changes to `.qmd` files. Commit as needed
+2. Re-render your website, with `freeze: true`. This should create/update the rendered content in `_site/`, and cache any computational output in `_freeze`.
+3. Commit the `_freeze` folder. `_site` is ignored by default (in [`.gitignore`](.gitignore)) since the GitHub Action renders and deploys the website from source.
+4. Push your changes to GitHub. The push should trigger the action, which will render the website using the frozen computation output, encrypt the specified pages, then deploy the protected website to GitHub pages.
 
 ## Adding encryption to existing Quarto Website
 
