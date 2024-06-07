@@ -30,19 +30,27 @@ jobs:
     env:
       PROTECTED_DIR: _site
       # PASSWORD: password
-      PASSWORD: ${{ secrets.STATICRPYT_PASSWORD }}
+      PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
     steps:
+      - name: Check PASSWORD variable
+        run: |
+          if [[ -z "${{ env.PASSWORD }}" ]]; then
+            echo "PASSWORD variable is not set"
+            exit 1
+          fi
       - uses: actions/checkout@v3
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
       - name: Render Quarto Project
         uses: quarto-dev/quarto-actions/render@v2
-      - name: Encrypt using Staticrypt
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: npm install -g staticrypt
-      - run: staticrypt $PROTECTED_DIR/* -r -d "$PROTECTED_DIR" -p "$PASSWORD" --short
+      - name: Install Staticrypt
+        run: npm install -g staticrypt
+      - name: Encrypt Pages
+        run: staticrypt $PROTECTED_DIR/* -r -d "$PROTECTED_DIR" -p "$PASSWORD" --short
       - name: Fix permissions
         run: |
           chmod -v -R +rX "$PROTECTED_DIR" | while read line; do
