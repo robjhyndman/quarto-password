@@ -18,11 +18,12 @@ To use, it fork or clone this site to a private GitHub repo, then do the followi
 3. The password is set in the following line from the [GitHub Action](.github/workflows/quarto-gh-pages-html.yml):
 
    ```
-         - run: staticrypt _site/* -r -d _site -p password --short
+         - run: staticrypt $protected-dir/* -r -d $protected-dir/ -p password --short
    ```
 
    * Change `password` to whatever you prefer to use.
-   * Currently, the entire website is password protected. You could also just add a password to one folder in the website. To do that, replace `_site` with `_site/folder` (in both places).
+   * Change the environment variable `protected-dir` to whatever folder your rendered output will be. The default in Quarto is `output_dir: _site`.
+   * Currently, every page in the entire website (`_site`) is password protected. You could also just add a password to one folder in the website. To do that, change the variable `protected-dir` from `_site` to `_site/folder`.
 
 ## Adding encryption to existing Quarto Website
 
