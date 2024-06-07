@@ -28,7 +28,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      protected-dir: _site
+      PROTECTED_DIR: _site
     steps:
       - uses: actions/checkout@v3
       - name: Install Quarto
@@ -40,11 +40,11 @@ jobs:
         with:
           node-version: 20
       - run: npm install -g staticrypt
-      - run: staticrypt $protected-dir/* -r -d $protected-dir -p password --short
+      - run: staticrypt $PROTECTED_DIR/* -r -d $PROTECTED_DIR -p password --short
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: $protected-dir
+          path: $PROTECTED_DIR
 
   deploy:
     if: github.event_name != 'pull_request'
