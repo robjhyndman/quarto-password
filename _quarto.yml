@@ -7,7 +7,9 @@ website:
     left:
       - index.qmd
       - about.qmd
-    
+  
+execute: 
+  freeze: true
 
 date-format: "D MMMM YYYY"
 
