@@ -41,7 +41,7 @@ jobs:
         with:
           node-version: 20
       - run: npm install -g staticrypt
-      - run: staticrypt $PROTECTED_DIR/* -r -d $PROTECTED_DIR -p $PASSWORD --short
+      - run: staticrypt "$PROTECTED_DIR/*" -r -d "$PROTECTED_DIR" -p "$PASSWORD" --short
       - name: Fix permissions
         run: |
           chmod -v -R +rX "$PROTECTED_DIR" | while read line; do
