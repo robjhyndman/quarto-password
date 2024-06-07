@@ -38,13 +38,13 @@ jobs:
             echo "PASSWORD variable is not set"
             exit 1
           fi
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
       - name: Render Quarto Project
         uses: quarto-dev/quarto-actions/render@v2
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
       - name: Install Staticrypt
@@ -57,7 +57,7 @@ jobs:
             echo "::warning title=Invalid file permissions automatically fixed::$line"
           done
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ${{env.PROTECTED_DIR}}
 
@@ -76,4 +76,4 @@ jobs:
   
       - name: Deploy to GitHub pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
