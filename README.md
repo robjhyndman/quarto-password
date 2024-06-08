@@ -33,7 +33,7 @@ To add encryption to an existing website, simply:
 
 ## Modify Action to render Quarto Website without Computations
 
-If you prefer to run your computations locally, you can use the [Freeze execution option](https://quarto.org/docs/projects/code-execution.html#freeze). Set `freeze: true` under `excute:` options in your `_quarto.yml` and remove/comment the `r-lib` steps in `.github/workflows/quarto-gh-pages-html.yml`.
+If you prefer to run your computations locally, you can use the [Freeze execution option](https://quarto.org/docs/projects/code-execution.html#freeze). Set `freeze: true` under `execute:` options in your `_quarto.yml` and remove/comment the `r-lib` steps in `.github/workflows/quarto-gh-pages-html.yml`.
 
 See this gist for modified action: <https://gist.github.com/cynthiahqy/c53e6947b6da7364f9090f3d77b006d>.
 
