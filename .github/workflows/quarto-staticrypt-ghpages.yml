@@ -38,7 +38,7 @@ jobs:
             echo "PASSWORD variable is not set"
             exit 1
           fi
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       # uncomment to run R code on build
       # - uses: r-lib/actions/setup-r@v2
@@ -52,9 +52,9 @@ jobs:
         uses: quarto-dev/quarto-actions/render@v2
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 24.x
       - name: Install Staticrypt
         run: npm install -g staticrypt
       - name: Encrypt Pages
@@ -66,7 +66,8 @@ jobs:
             echo "::warning title=Invalid file permissions automatically fixed::$line"
           done
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        # TODO Below will need to be updated once actions/upload-pages-artifact@v5+ is released, see https://github.com/actions/upload-pages-artifact/issues/142
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ${{env.PROTECTED_DIR}}
 
@@ -78,11 +79,11 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - name: Setup pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v6
 
       - name: Deploy to GitHub pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
